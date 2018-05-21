@@ -3,4 +3,7 @@
     <string name="title_activity_detail">Movie Details</string>
     <string name="api_key"></string>
     <string name="thumbnail_size">w185</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="out_of_ten">/10</string>
 </resources>

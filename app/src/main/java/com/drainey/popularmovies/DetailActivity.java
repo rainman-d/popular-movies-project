@@ -41,11 +41,13 @@ public class DetailActivity extends AppCompatActivity {
 
     private void loadDetails(){
         mTitleTextView.setText(this.movie.getTitle());
+        int posterWidth = (int)getResources().getDimension(R.dimen.detail_poster_width);
+        int posterHeight = (int)getResources().getDimension(R.dimen.detail_poster_height);
         Picasso.with(this)
                 .load(this.movie.getImageUrl())
-                .resize(400, 600)
+                .resize(posterWidth, posterHeight)
                 .into(mMovieImageView);
-        String rating = movie.getMovieRating() + "/10";
+        String rating = movie.getMovieRating() + getString(R.string.out_of_ten);
         mRatingTextView.setText(rating);
         mReleaseDateTextView.setText(this.movie.getReleaseDate().substring(0, 4));
         mOverviewTextView.setText(this.movie.getOverview());
