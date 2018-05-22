@@ -1,6 +1,7 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="activity_detail_text_size">20sp</dimen>
     <dimen name="detail_poster_width">400px</dimen>
     <dimen name="detail_poster_height">600px</dimen>
 </resources>

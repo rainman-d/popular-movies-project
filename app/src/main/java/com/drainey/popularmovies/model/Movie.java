@@ -15,6 +15,7 @@ public class Movie implements Parcelable{
     private String backdropPath;
     private String movieRating;
     private String releaseDate;
+    private String originalTitle;
 
     public Movie(){
 
@@ -24,7 +25,7 @@ public class Movie implements Parcelable{
         ReadFromParcel(in);
     }
 
-    public Movie(String title, String movieId, String imageUrl, String overview, String backdropPath, String movieRating, String releaseDate) {
+    public Movie(String title, String movieId, String imageUrl, String overview, String backdropPath, String movieRating, String releaseDate, String originalTitle) {
         this.title = title;
         this.movieId = movieId;
         this.imageUrl = imageUrl;
@@ -32,6 +33,7 @@ public class Movie implements Parcelable{
         this.backdropPath = backdropPath;
         this.movieRating = movieRating;
         this.releaseDate = releaseDate;
+        this.originalTitle = originalTitle;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
@@ -52,6 +54,7 @@ public class Movie implements Parcelable{
         backdropPath = in.readString();
         movieRating = in.readString();
         releaseDate = in.readString();
+        originalTitle = in.readString();
     }
 
     @Override
@@ -63,6 +66,7 @@ public class Movie implements Parcelable{
         parcel.writeString(backdropPath);
         parcel.writeString(movieRating);
         parcel.writeString(releaseDate);
+        parcel.writeString(originalTitle);
     }
 
 
@@ -122,6 +126,14 @@ public class Movie implements Parcelable{
         this.releaseDate = releaseDate;
     }
 
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
     @Override
     public String toString() {
         return "Movie{" +
@@ -132,6 +144,7 @@ public class Movie implements Parcelable{
                 ", backdropPath='" + backdropPath + '\'' +
                 ", movieRating='" + movieRating + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
+                ", originalTitle='" + originalTitle + '\'' +
                 '}';
     }
 

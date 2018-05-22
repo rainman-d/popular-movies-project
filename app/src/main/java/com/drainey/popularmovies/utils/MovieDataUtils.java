@@ -35,6 +35,7 @@ public class MovieDataUtils {
     public static final String JSON_KEY_OVERVIEW = "overview";
     public static final String JSON_KEY_RELEASE_DATE = "release_date";
     public static final String JSON_KEY_BACKDROP_PATH = "backdrop_path";
+    public static final String JSON_KEY_ORIGINAL_TITLE = "original_title";
 
 
     public static URL buildApiCall(String path, String key){
@@ -86,7 +87,8 @@ public class MovieDataUtils {
                 String rating = obj.getString(JSON_KEY_VOTE_AVG);
                 String overview = obj.getString(JSON_KEY_OVERVIEW);
                 String releaseDate = obj.getString(JSON_KEY_RELEASE_DATE);
-                movie = new Movie(title, id, imagePath, overview, backdropPath, rating, releaseDate);
+                String originalTitle = obj.getString(JSON_KEY_ORIGINAL_TITLE);
+                movie = new Movie(title, id, imagePath, overview, backdropPath, rating, releaseDate, originalTitle);
 
             } catch (JSONException e){
                 Log.e(MovieDataUtils.class.getSimpleName(), "error parsing json data", e);

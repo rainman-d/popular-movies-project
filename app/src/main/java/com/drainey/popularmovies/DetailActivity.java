@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
     private Movie movie;
+    private TextView mOriginalTitleTextView;
     private TextView mTitleTextView;
     private ImageView mMovieImageView;
     private TextView mRatingTextView;
@@ -32,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
         mRatingTextView = (TextView)findViewById(R.id.tv_rating);
         mReleaseDateTextView = (TextView) findViewById(R.id.tv_release_date);
         mOverviewTextView = (TextView) findViewById(R.id.tv_overview);
+        mOriginalTitleTextView = (TextView) findViewById(R.id.tv_original_title);
         movie = getIntent().getExtras().getParcelable(MainActivity.MOVIE_PARCEL);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -49,8 +51,12 @@ public class DetailActivity extends AppCompatActivity {
                 .into(mMovieImageView);
         String rating = movie.getMovieRating() + getString(R.string.out_of_ten);
         mRatingTextView.setText(rating);
-        mReleaseDateTextView.setText(this.movie.getReleaseDate().substring(0, 4));
+        int year = Integer.parseInt(this.movie.getReleaseDate().substring(0, 4));
+        int month = Integer.parseInt(this.movie.getReleaseDate().substring(5, 7));
+        int day = Integer.parseInt(this.movie.getReleaseDate().substring(8, 10));
+        mReleaseDateTextView.setText(month + "-" + day + "-" + year);
         mOverviewTextView.setText(this.movie.getOverview());
+        mOriginalTitleTextView.setText(this.movie.getOriginalTitle());
     }
 
     @Override
