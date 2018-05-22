@@ -49,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
         mErrorIcon.setColorFilter(color);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(mAdapter == null){
+            URL url = MovieDataUtils.buildApiCall(MovieDataUtils.POPULAR_MOVIE_PATH, getString(R.string.api_key));
+            new MovieTask().execute(url);
+        }
+    }
+
     private class MovieTask extends AsyncTask<URL, Void, String>{
 
         @Override
