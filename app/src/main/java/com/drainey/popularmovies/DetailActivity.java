@@ -46,7 +46,7 @@ public class DetailActivity extends AppCompatActivity {
         Drawable errorIcon = ImageUtils.getRedErrorIcon(this);
 
         Picasso.with(this)
-                .load(this.movie.getImageUrl() + "zzz")
+                .load(this.movie.getImageUrl())
                 .error(errorIcon)
                 .resize(posterWidth, posterHeight)
                 .into(mMovieImageView);
