@@ -32,10 +32,12 @@ public class DetailActivity extends AppCompatActivity {
         mReleaseDateTextView = (TextView) findViewById(R.id.tv_release_date);
         mOverviewTextView = (TextView) findViewById(R.id.tv_overview);
         mOriginalTitleTextView = (TextView) findViewById(R.id.tv_original_title);
-        movie = getIntent().getExtras().getParcelable(MainActivity.MOVIE_PARCEL);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getIntent().getExtras() != null) {
+            movie = getIntent().getExtras().getParcelable(MainActivity.MOVIE_PARCEL);
+            loadDetails();
+        }
 
-        loadDetails();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 

@@ -55,7 +55,7 @@ public class MovieDataUtils {
 
     public static List<Movie> getMovieList(String jsonString){
         List<Movie> movieList = new ArrayList<>();
-        if(jsonString != null || jsonString.trim().length() != 0){
+        if(jsonString != null && jsonString.trim().length() != 0){
             try {
                 JSONObject object = new JSONObject(jsonString);
                 JSONArray array = object.getJSONArray(JSON_KEY_RESULTS);
