@@ -2,10 +2,12 @@ package com.drainey.popularmovies;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
@@ -67,10 +69,15 @@ public class MovieAdapter extends BaseAdapter {
                     break;
             }
 
+            Drawable errorIcon = context.getResources().getDrawable(R.drawable.ic_error_icon);
+            int color = ContextCompat.getColor(context, R.color.dark_red);
+            errorIcon.setColorFilter(color, PorterDuff.Mode.DST);
+
             Picasso.with(context)
                     .load(url)
                     .centerCrop()
                     .resize(width/2, height/2)
+                    .error(errorIcon)
                     .into(imageView);
         } else{
             imageView = (ImageView)view;

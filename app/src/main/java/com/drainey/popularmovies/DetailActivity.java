@@ -1,14 +1,11 @@
 package com.drainey.popularmovies;
 
-import android.bluetooth.BluetoothClass;
-import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,8 +42,13 @@ public class DetailActivity extends AppCompatActivity {
         mTitleTextView.setText(this.movie.getTitle());
         int posterWidth = (int)getResources().getDimension(R.dimen.detail_poster_width);
         int posterHeight = (int)getResources().getDimension(R.dimen.detail_poster_height);
+        Drawable errorIcon = getResources().getDrawable(R.drawable.ic_error_icon);
+        int color = ContextCompat.getColor(this, R.color.dark_red);
+        errorIcon.setColorFilter(color, PorterDuff.Mode.DST);
+
         Picasso.with(this)
                 .load(this.movie.getImageUrl())
+                .error(errorIcon)
                 .resize(posterWidth, posterHeight)
                 .into(mMovieImageView);
         String rating = movie.getMovieRating() + getString(R.string.out_of_ten);
@@ -69,4 +71,5 @@ public class DetailActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
