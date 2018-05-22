@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.drainey.popularmovies.model.Movie;
+import com.drainey.popularmovies.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
@@ -42,12 +43,10 @@ public class DetailActivity extends AppCompatActivity {
         mTitleTextView.setText(this.movie.getTitle());
         int posterWidth = (int)getResources().getDimension(R.dimen.detail_poster_width);
         int posterHeight = (int)getResources().getDimension(R.dimen.detail_poster_height);
-        Drawable errorIcon = getResources().getDrawable(R.drawable.ic_error_icon);
-        int color = ContextCompat.getColor(this, R.color.dark_red);
-        errorIcon.setColorFilter(color, PorterDuff.Mode.DST);
+        Drawable errorIcon = ImageUtils.getRedErrorIcon(this);
 
         Picasso.with(this)
-                .load(this.movie.getImageUrl())
+                .load(this.movie.getImageUrl() + "zzz")
                 .error(errorIcon)
                 .resize(posterWidth, posterHeight)
                 .into(mMovieImageView);

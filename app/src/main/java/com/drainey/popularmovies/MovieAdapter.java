@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.drainey.popularmovies.model.Movie;
+import com.drainey.popularmovies.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -69,9 +70,7 @@ public class MovieAdapter extends BaseAdapter {
                     break;
             }
 
-            Drawable errorIcon = context.getResources().getDrawable(R.drawable.ic_error_icon);
-            int color = ContextCompat.getColor(context, R.color.dark_red);
-            errorIcon.setColorFilter(color, PorterDuff.Mode.DST);
+            Drawable errorIcon = ImageUtils.getRedErrorIcon(context);
 
             Picasso.with(context)
                     .load(url)
