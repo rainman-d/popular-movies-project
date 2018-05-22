@@ -13,7 +13,7 @@
             android:id="@+id/tv_detail_movie_title"
             android:background="@color/colorPrimary"
             android:textSize="36sp"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:gravity="center" />
         <RelativeLayout
