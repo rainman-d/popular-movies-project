@@ -1,10 +1,8 @@
 package com.drainey.popularmovies.utils;
 
-import android.content.res.Resources;
 import android.net.Uri;
 import android.util.Log;
 
-import com.drainey.popularmovies.R;
 import com.drainey.popularmovies.model.Movie;
 
 import org.json.JSONArray;
