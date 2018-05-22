@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mErrorMessageTextView;
     private ImageView mErrorIcon;
     public static final String MOVIE_PARCEL = "movie_parcel";
-    private boolean isNetworkConnected;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,14 +119,13 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isNetworkConnected(){
         boolean isConnected = false;
-//        this.isNetworkConnected = !this.isNetworkConnected;
+
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if(manager != null){
             NetworkInfo ni = manager.getActiveNetworkInfo();
             isConnected = ni.isConnected();
         }
         return isConnected;
-//        return this.isNetworkConnected;
     }
 
     private void toggleErrorMessage(boolean isError){
