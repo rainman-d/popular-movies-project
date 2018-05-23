@@ -50,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if(mAdapter == null){
-            URL url = MovieDataUtils.buildApiCall(MovieDataUtils.POPULAR_MOVIE_PATH, getString(R.string.api_key));
-            new MovieTask().execute(url);
+            if(this.isNetworkConnected()) {
+                URL url = MovieDataUtils.buildApiCall(MovieDataUtils.POPULAR_MOVIE_PATH, getString(R.string.api_key));
+                new MovieTask().execute(url);
+            }
         }
     }
 
