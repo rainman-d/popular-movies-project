@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if(mAdapter == null){
             if(this.isNetworkConnected()) {
-                URL url = MovieDataUtils.buildApiCall(MovieDataUtils.POPULAR_MOVIE_PATH, getString(R.string.api_key));
+                URL url = MovieDataUtils.buildApiCall(MovieDataUtils.POPULAR_MOVIE_PATH, MovieDataUtils.API_KEY_VALUE);
                 new MovieTask().execute(url);
             }
         }
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(apiPath != null){
-            URL url = MovieDataUtils.buildApiCall(apiPath, getString(R.string.api_key));
+            URL url = MovieDataUtils.buildApiCall(apiPath, MovieDataUtils.API_KEY_VALUE);
             new MovieTask().execute(url);
             return true;
         }

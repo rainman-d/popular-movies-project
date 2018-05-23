@@ -3,6 +3,7 @@ package com.drainey.popularmovies.utils;
 import android.net.Uri;
 import android.util.Log;
 
+import com.drainey.popularmovies.BuildConfig;
 import com.drainey.popularmovies.model.Movie;
 
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ public class MovieDataUtils {
     public static final String JSON_KEY_RELEASE_DATE = "release_date";
     public static final String JSON_KEY_BACKDROP_PATH = "backdrop_path";
     public static final String JSON_KEY_ORIGINAL_TITLE = "original_title";
+    public static final String API_KEY_VALUE = BuildConfig.MOVIE_DB_API_KEY;
 
 
     public static URL buildApiCall(String path, String key){
