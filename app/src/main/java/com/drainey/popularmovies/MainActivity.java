@@ -128,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
 
         ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if(manager != null){
-            NetworkInfo ni = manager.getActiveNetworkInfo();
-            isConnected = ni.isConnected();
+            NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+            isConnected = networkInfo != null && networkInfo.isConnected();
         }
         return isConnected;
     }
