@@ -13,25 +13,24 @@ import com.drainey.popularmovies.model.Movie;
 import com.drainey.popularmovies.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DetailActivity extends AppCompatActivity {
     private Movie movie;
-    private TextView mOriginalTitleTextView;
-    private TextView mTitleTextView;
-    private ImageView mMovieImageView;
-    private TextView mRatingTextView;
-    private TextView mReleaseDateTextView;
-    private TextView mOverviewTextView;
+    @BindView(R.id.tv_detail_movie_title) TextView mTitleTextView;
+    @BindView(R.id.tv_original_title) TextView mOriginalTitleTextView;
+    @BindView(R.id.iv_movie_image) ImageView mMovieImageView;
+    @BindView(R.id.tv_rating) TextView mRatingTextView;
+    @BindView(R.id.tv_release_date) TextView mReleaseDateTextView;
+    @BindView(R.id.tv_overview) TextView mOverviewTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        mTitleTextView = (TextView)findViewById(R.id.tv_detail_movie_title);
-        mMovieImageView = (ImageView)findViewById(R.id.iv_movie_image);
-        mRatingTextView = (TextView)findViewById(R.id.tv_rating);
-        mReleaseDateTextView = (TextView) findViewById(R.id.tv_release_date);
-        mOverviewTextView = (TextView) findViewById(R.id.tv_overview);
-        mOriginalTitleTextView = (TextView) findViewById(R.id.tv_original_title);
+        ButterKnife.bind(this);
+
         if(getIntent().getExtras() != null) {
             movie = getIntent().getExtras().getParcelable(MainActivity.MOVIE_PARCEL);
             loadDetails();

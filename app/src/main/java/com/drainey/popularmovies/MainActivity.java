@@ -26,21 +26,24 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
-    private GridView mMovieGridView;
+    @BindView(R.id.main_gridview) GridView mMovieGridView;
+    @BindView(R.id.tv_network_error) TextView mErrorMessageTextView;
+    @BindView(R.id.iv_error_icon) ImageView mErrorIcon;
+
     private MovieAdapter mAdapter;
-    private TextView mErrorMessageTextView;
-    private ImageView mErrorIcon;
     public static final String MOVIE_PARCEL = "movie_parcel";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mMovieGridView = (GridView) findViewById(R.id.main_gridview);
-        mErrorMessageTextView = (TextView) findViewById(R.id.tv_network_error);
-        mErrorIcon = (ImageView) findViewById(R.id.iv_error_icon);
+        ButterKnife.bind(this);
+
         mErrorIcon.setImageResource(R.drawable.ic_error_icon);
         int color = ContextCompat.getColor(this, R.color.dark_red);
         mErrorIcon.setColorFilter(color);
