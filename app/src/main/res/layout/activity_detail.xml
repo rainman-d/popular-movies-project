@@ -1,72 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="wrap_content"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tv_detail_movie_title"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:id="@+id/tv_detail_movie_title"
-            android:background="@color/colorPrimary"
-            android:textSize="36sp"
-            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
-            android:gravity="center" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/iv_movie_image"
-                android:layout_margin="8dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/iv_movie_image"
-                android:layout_toEndOf="@+id/iv_movie_image"
-                android:id="@+id/tv_original_title"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:textSize="@dimen/activity_detail_text_size"
-                android:layout_marginTop="8dp"
-                />
-            <TextView
-                android:layout_below="@id/tv_original_title"
-                android:layout_toRightOf="@+id/iv_movie_image"
-                android:layout_toEndOf="@+id/iv_movie_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_release_date"
-                android:textSize="@dimen/activity_detail_text_size"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                />
-            <TextView
-                android:layout_toRightOf="@id/iv_movie_image"
-                android:layout_toEndOf="@+id/iv_movie_image"
-                android:layout_below="@id/tv_release_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/activity_detail_text_size"
-                android:textStyle="bold"
-                android:id="@+id/tv_rating"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
-        </RelativeLayout>
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="36sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <ImageView
+            android:id="@+id/iv_movie_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:id="@+id/tv_overview"
-            android:layout_margin="12dp"/>
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_movie_title"
+            app:srcCompat="@drawable/ic_error_icon" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_original_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:textSize="@dimen/activity_detail_text_size"
+            app:layout_constraintStart_toEndOf="@+id/iv_movie_image"
+            app:layout_constraintTop_toBottomOf="@+id/tv_detail_movie_title"
+            tools:text="Star Wars" />
+
+        <TextView
+            android:id="@+id/tv_release_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="@dimen/activity_detail_text_size"
+            app:layout_constraintStart_toEndOf="@+id/iv_movie_image"
+            app:layout_constraintTop_toBottomOf="@+id/tv_original_title"
+            tools:text="9-7-1999" />
+
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:padding="4dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_movie_image"
+            tools:text="asdfasfasdfasdfasfasfdasdfa" />
+
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textSize="@dimen/activity_detail_text_size"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/iv_movie_image"
+            app:layout_constraintTop_toBottomOf="@+id/tv_release_date"
+            tools:text="7.0/10" />
+
+        <ImageView
+            android:id="@+id/favoriteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:onClick="addFavorite"
+            app:layout_constraintBottom_toTopOf="@+id/tv_overview"
+            app:layout_constraintStart_toEndOf="@+id/iv_movie_image"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rating"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@android:drawable/btn_star_big_off" />
+
+        <TextView
+            android:id="@+id/tv_favorites"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/add_to_favorites"
+            app:layout_constraintBottom_toTopOf="@+id/favoriteButton"
+            app:layout_constraintStart_toEndOf="@+id/favoriteButton"
+            app:layout_constraintTop_toBottomOf="@+id/favoriteButton"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <ImageView
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_overview" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider" />
+    </android.support.constraint.ConstraintLayout>
+
 </ScrollView>

@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.drainey.popularmovies.model.Movie;
 import com.drainey.popularmovies.utils.ImageUtils;
@@ -69,6 +71,10 @@ public class DetailActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void addFavorite(View view){
+        Toast.makeText(this, this.movie.getTitle(), Toast.LENGTH_LONG).show();
     }
 
 }
