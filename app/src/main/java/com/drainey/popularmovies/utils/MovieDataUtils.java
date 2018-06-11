@@ -37,6 +37,25 @@ public class MovieDataUtils {
     public static final String JSON_KEY_ORIGINAL_TITLE = "original_title";
     public static final String API_KEY_VALUE = BuildConfig.MOVIE_DB_API_KEY;
 
+    public static URL convertUriToUrl(Uri uri){
+        URL returnUrl = null;
+        try{
+            returnUrl = new URL(uri.toString());
+        } catch (MalformedURLException e){
+            Log.e(MovieDataUtils.class.getSimpleName(), "Error creating URL from uri supplied: " + uri.toString(), e);
+        }
+
+        return returnUrl;
+    }
+
+    public static URL buildMovieCall(int id, String path){
+        Uri uri = Uri.parse(BASE_URL).buildUpon()
+                .appendPath(String.valueOf(id))
+                .appendPath(path)
+                .build();
+        URL url = convertUriToUrl(uri);
+        return url;
+    }
 
     public static URL buildApiCall(String path, String key){
 
@@ -45,12 +64,7 @@ public class MovieDataUtils {
                 .appendQueryParameter(API_KEY, key)
                 .build();
 
-        URL url = null;
-        try {
-            url = new URL(uri.toString());
-        } catch (MalformedURLException e){
-            Log.e(MovieDataUtils.class.getSimpleName(), "Bad Url string supplied!", e);
-        }
+        URL url = convertUriToUrl(uri);
 
         return url;
     }
