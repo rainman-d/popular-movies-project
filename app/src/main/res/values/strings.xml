@@ -7,4 +7,6 @@
     <string name="network_error_message">No network connection!</string>
     <string name="add_to_favorites">Add to Favorites</string>
     <string name="movie_is_favorite">Favorite</string>
+    <string name="trailer_name">Trailer</string>
+    <string name="reviews_label">Reviews</string>
 </resources>

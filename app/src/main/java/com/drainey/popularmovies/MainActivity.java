@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.drainey.popularmovies.model.Movie;
 import com.drainey.popularmovies.utils.HttpUtils;
+import com.drainey.popularmovies.utils.JsonUtils;
 import com.drainey.popularmovies.utils.MovieDataUtils;
 
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-            final List<Movie> movieList = MovieDataUtils.getMovieList(s);
+            final List<Movie> movieList = JsonUtils.getMovieList(s);
             mAdapter = new MovieAdapter(MainActivity.this, movieList);
             mMovieGridView.setAdapter(mAdapter);
             mMovieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
