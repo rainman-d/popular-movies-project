@@ -1,9 +1,6 @@
 package com.drainey.popularmovies;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -18,6 +15,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.drainey.popularmovies.adapters.MovieAdapter;
 import com.drainey.popularmovies.model.Movie;
 import com.drainey.popularmovies.utils.HttpUtils;
 import com.drainey.popularmovies.utils.JsonUtils;
@@ -48,13 +46,14 @@ public class MainActivity extends AppCompatActivity {
         mErrorIcon.setImageResource(R.drawable.ic_error_icon);
         int color = ContextCompat.getColor(this, R.color.dark_red);
         mErrorIcon.setColorFilter(color);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if(mAdapter == null){
-            if(this.isNetworkConnected()) {
+            if(HttpUtils.isNetworkConnected(this)) {
                 URL url = MovieDataUtils.buildApiCall(MovieDataUtils.POPULAR_MOVIE_PATH, MovieDataUtils.API_KEY_VALUE);
                 new MovieTask().execute(url);
             }
@@ -104,8 +103,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         String apiPath = null;
-        boolean isConnectedToNetwork = isNetworkConnected();
-        if(!isConnectedToNetwork){
+        boolean isConnectionNeeded = item.getItemId() != R.id.favorite_movies;
+        boolean isConnectedToNetwork = HttpUtils.isNetworkConnected(this);
+        if(isConnectionNeeded && !isConnectedToNetwork){
             toggleErrorMessage(true);
             return true;
         } else {
@@ -119,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.top_rated:
                 apiPath = MovieDataUtils.TOP_RATED_MOVIE_PATH;
                 break;
+            case R.id.favorite_movies:
+                Intent intent = new Intent(this, FavoriteMoviesActivity.class);
+                startActivity(intent);
+                break;
         }
 
         if(apiPath != null){
@@ -127,17 +131,6 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private boolean isNetworkConnected(){
-        boolean isConnected = false;
-
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(manager != null){
-            NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-            isConnected = networkInfo != null && networkInfo.isConnected();
-        }
-        return isConnected;
     }
 
     private void toggleErrorMessage(boolean isError){

@@ -1,5 +1,9 @@
 package com.drainey.popularmovies.utils;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -33,5 +37,16 @@ public class HttpUtils {
         } finally {
             conn.disconnect();
         }
+    }
+
+    public static boolean isNetworkConnected(Context context){
+        boolean isConnected = false;
+
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(manager != null){
+            NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+            isConnected = networkInfo != null && networkInfo.isConnected();
+        }
+        return isConnected;
     }
 }

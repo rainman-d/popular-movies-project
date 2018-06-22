@@ -3,10 +3,12 @@
     <string name="title_activity_detail">Movie Details</string>
     <string name="popular_movies">Popular Movies</string>
     <string name="top_rated">Top Rated</string>
+    <string name="favorites_movies">Favorites</string>
     <string name="out_of_ten">/10</string>
     <string name="network_error_message">No network connection!</string>
     <string name="add_to_favorites">Add to Favorites</string>
     <string name="movie_is_favorite">Favorite</string>
     <string name="trailer_name">Trailer</string>
     <string name="reviews_label">Reviews</string>
+    <string name="no_favorites">No favorite movies selected yet!</string>
 </resources>

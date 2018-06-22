@@ -1,30 +1,57 @@
 package com.drainey.popularmovies.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
  * Created by david-rainey on 5/7/18.
  */
-
+@Entity(tableName = "movie")
 public class Movie implements Parcelable{
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String title;
+    @ColumnInfo(name = "movie_id")
     private String movieId;
+    @ColumnInfo(name = "image_url")
     private String imageUrl;
     private String overview;
+    @ColumnInfo(name = "backdrop_path")
     private String backdropPath;
+    @ColumnInfo(name = "movie_rating")
     private String movieRating;
+    @ColumnInfo(name = "release_date")
     private String releaseDate;
+    @ColumnInfo(name = "original_title")
     private String originalTitle;
 
-    public Movie(){
-
+    public Movie(int id, String title, String movieId, String imageUrl, String overview, String backdropPath, String movieRating, String releaseDate, String originalTitle) {
+        this.id = id;
+        this.title = title;
+        this.movieId = movieId;
+        this.imageUrl = imageUrl;
+        this.overview = overview;
+        this.backdropPath = backdropPath;
+        this.movieRating = movieRating;
+        this.releaseDate = releaseDate;
+        this.originalTitle = originalTitle;
     }
 
+    @Ignore
+    public Movie(){
+        // no-arg default constructor
+    }
+
+    @Ignore
     public Movie(Parcel in){
         ReadFromParcel(in);
     }
 
+    @Ignore
     public Movie(String title, String movieId, String imageUrl, String overview, String backdropPath, String movieRating, String releaseDate, String originalTitle) {
         this.title = title;
         this.movieId = movieId;
@@ -47,6 +74,7 @@ public class Movie implements Parcelable{
     };
 
     private void ReadFromParcel(Parcel in){
+        id = in.readInt();
         title = in.readString();
         movieId = in.readString();
         imageUrl = in.readString();
@@ -59,6 +87,7 @@ public class Movie implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(title);
         parcel.writeString(movieId);
         parcel.writeString(imageUrl);
@@ -69,6 +98,9 @@ public class Movie implements Parcelable{
         parcel.writeString(originalTitle);
     }
 
+    public int getId(){
+        return id;
+    }
 
     public String getTitle() {
         return title;
@@ -137,7 +169,8 @@ public class Movie implements Parcelable{
     @Override
     public String toString() {
         return "Movie{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", movieId='" + movieId + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
                 ", overview='" + overview + '\'' +

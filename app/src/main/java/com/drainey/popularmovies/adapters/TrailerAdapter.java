@@ -1,6 +1,5 @@
-package com.drainey.popularmovies;
+package com.drainey.popularmovies.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.drainey.popularmovies.R;
 import com.drainey.popularmovies.utils.MovieDataUtils;
 
 import java.util.ArrayList;

@@ -1,11 +1,11 @@
 package com.drainey.popularmovies;
 
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.drainey.popularmovies.adapters.ReviewAdapter;
+import com.drainey.popularmovies.adapters.TrailerAdapter;
 import com.drainey.popularmovies.model.Movie;
+import com.drainey.popularmovies.persistence.AppDatabase;
+import com.drainey.popularmovies.utils.AppExecutors;
 import com.drainey.popularmovies.utils.HttpUtils;
 import com.drainey.popularmovies.utils.ImageUtils;
 import com.drainey.popularmovies.utils.JsonUtils;
@@ -44,6 +47,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     @BindView(R.id.rv_reviews) RecyclerView reviewsRecyclerView;
     private TrailerAdapter trailerAdapter;
     private ReviewAdapter reviewAdapter;
+    private AppDatabase mDb;
+    private boolean isFavorite;
 
     public static final int MOVIE_DATA_LOADER_ID = 102;
 
@@ -59,9 +64,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             loadDetails();
         }
 
-//        trailerRecyclerView = (RecyclerView) findViewById(R.id.rv_trailers);
+
         trailerRecyclerView.setLayoutManager(new LinearLayoutManager(this){
-//            , LinearLayoutManager.VERTICAL, false
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -80,8 +84,11 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         trailerRecyclerView.setAdapter(trailerAdapter);
         reviewsRecyclerView.setAdapter(reviewAdapter);
 
-//        new TrailerTask().execute();
         getSupportLoaderManager().initLoader(MOVIE_DATA_LOADER_ID, null, this);
+
+        mDb = AppDatabase.getInstance(getApplicationContext());
+
+        this.checkIfFavorite(movie.getMovieId());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -91,7 +98,9 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     protected void onResume() {
         super.onResume();
 
-        getSupportLoaderManager().restartLoader(MOVIE_DATA_LOADER_ID, null, this);
+        if(HttpUtils.isNetworkConnected(this)) {
+            getSupportLoaderManager().restartLoader(MOVIE_DATA_LOADER_ID, null, this);
+        }
     }
 
     private void loadDetails(){
@@ -119,7 +128,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                finish();
                 return true;
         }
 
@@ -127,8 +136,28 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     public void addFavorite(View view){
-        Toast.makeText(this, this.movie.getTitle(), Toast.LENGTH_LONG).show();
+        final Movie movieInstance = this.movie;
+        if(isFavorite){
+            // delete favorite from database
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    mDb.movieDao().deleteMovie(movieInstance.getMovieId());
+                }
+            });
+        } else {
+            // insert movie into database
+            AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    mDb.movieDao().insertMovie(movieInstance);
+                }
+            });
+        }
+        // change UI to show new button color
+        toggleFavorite(!isFavorite);
     }
+
 
     @Override
     public Loader<Map<String,String>> onCreateLoader(int i, final Bundle bundle) {
@@ -186,29 +215,32 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
-//    class TrailerTask extends AsyncTask<Integer, Void, String>{
-//
-//        @Override
-//        protected String doInBackground(Integer... id) {
-//            String movieDbData;
-//            Integer movieId = Integer.parseInt(DetailActivity.this.movie.getMovieId());
-//            URL url = MovieDataUtils.buildMovieCall(movieId, MovieDataUtils.API_VIDEOS_PATH);
-//            try{
-//                movieDbData = HttpUtils.getApiData(url);
-//            }catch (IOException e){
-//                Log.e(DetailActivity.class.getSimpleName(), "Error retrieving data from API", e);
-//                movieDbData = e.toString();
-//            }
-//
-//            return movieDbData;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//
-//            List<String> list = JsonUtils.getTrailerList(s);
-//            Log.d(DetailActivity.class.getSimpleName(), "Returned info: " + list.toString());
-//            trailerAdapter.changeTrailerList(list);
-//        }
-//    }
+    private void toggleFavorite(boolean isFavorite){
+        ImageView favStar = (ImageView) findViewById(R.id.favoriteButton);
+        int color;
+        if(isFavorite){
+            color = ContextCompat.getColor(this, R.color.orange_yellow);
+            favStar.setColorFilter(color);
+        } else {
+            color = ContextCompat.getColor(this, R.color.dark_grey);
+            favStar.setColorFilter(color);
+        }
+    }
+
+    private void checkIfFavorite(final String movieId){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Movie returnedMovie = mDb.movieDao().loadSingleMovie(movieId);
+                isFavorite = returnedMovie != null;
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        toggleFavorite(isFavorite);
+                    }
+                });
+            }
+        });
+    }
+
 }

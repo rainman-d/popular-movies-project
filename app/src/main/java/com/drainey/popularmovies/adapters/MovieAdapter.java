@@ -1,16 +1,15 @@
-package com.drainey.popularmovies;
+package com.drainey.popularmovies.adapters;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.drainey.popularmovies.R;
 import com.drainey.popularmovies.model.Movie;
 import com.drainey.popularmovies.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
@@ -32,7 +31,13 @@ public class MovieAdapter extends BaseAdapter {
 
     public void setMovieList(List<Movie> list){
         this.movieList = list;
+        notifyDataSetChanged();
     }
+
+    public List<Movie> getMovieList(){
+        return movieList;
+    }
+
     @Override
     public int getCount() {
         return this.movieList.size();

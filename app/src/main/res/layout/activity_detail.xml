@@ -83,28 +83,28 @@
 
         <ImageView
             android:id="@+id/favoriteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="0dp"
             android:layout_marginBottom="16dp"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:onClick="addFavorite"
             app:layout_constraintBottom_toTopOf="@+id/tv_overview"
             app:layout_constraintStart_toEndOf="@+id/iv_movie_image"
             app:layout_constraintTop_toBottomOf="@+id/tv_rating"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@android:drawable/btn_star_big_off" />
+            app:srcCompat="@drawable/favorite_star" />
 
         <TextView
             android:id="@+id/tv_favorites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="0dp"
             android:text="@string/add_to_favorites"
             app:layout_constraintBottom_toTopOf="@+id/favoriteButton"
             app:layout_constraintStart_toEndOf="@+id/favoriteButton"
             app:layout_constraintTop_toBottomOf="@+id/favoriteButton"
-            app:layout_constraintVertical_bias="0.45" />
+            app:layout_constraintVertical_bias="0.50" />
 
         <ImageView
             android:id="@+id/divider"
@@ -125,8 +125,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider" />
 
