@@ -10,5 +10,5 @@
     <string name="movie_is_favorite">Favorite</string>
     <string name="trailer_name">Trailer</string>
     <string name="reviews_label">Reviews</string>
-    <string name="no_favorites">No favorite movies selected yet!</string>
+    <string name="no_favorites">No favorite movies selected!</string>
 </resources>

@@ -57,35 +57,38 @@ public class MovieAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         Movie movie = getItem(i);
         Context con = viewGroup.getContext();
-
         ImageView imageView;
+
         if(view == null){
             LayoutInflater inflater = LayoutInflater.from(con);
             inflater.inflate(R.layout.movie_thumbnail, viewGroup, false);
             imageView = new ImageView(context);
-            int width = context.getResources().getDisplayMetrics().widthPixels;
-            int height = context.getResources().getDisplayMetrics().heightPixels;
-            String url = "";
-            switch (context.getResources().getConfiguration().orientation){
-                case Configuration.ORIENTATION_PORTRAIT:
-                    url = movie.getImageUrl();
-                    break;
-                case Configuration.ORIENTATION_LANDSCAPE:
-                    url = movie.getBackdropPath();
-                    break;
-            }
-
-            Drawable errorIcon = ImageUtils.getRedErrorIcon(context);
-
-            Picasso.with(context)
-                    .load(url)
-                    .centerCrop()
-                    .resize(width/2, height/2)
-                    .error(errorIcon)
-                    .into(imageView);
         } else{
             imageView = (ImageView)view;
         }
+
+        String url = "";
+
+        switch (context.getResources().getConfiguration().orientation){
+            case Configuration.ORIENTATION_PORTRAIT:
+                url = movie.getImageUrl();
+                break;
+            case Configuration.ORIENTATION_LANDSCAPE:
+                url = movie.getBackdropPath();
+                break;
+        }
+
+        int width = context.getResources().getDisplayMetrics().widthPixels;
+        int height = context.getResources().getDisplayMetrics().heightPixels;
+
+        Drawable errorIcon = ImageUtils.getRedErrorIcon(context);
+
+        Picasso.with(context)
+                .load(url)
+                .centerCrop()
+                .resize(width/2, height/2)
+                .error(errorIcon)
+                .into(imageView);
 
         return imageView;
     }
