@@ -52,7 +52,6 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
 
     public static final int MOVIE_DATA_LOADER_ID = 102;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +154,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             });
         }
         // change UI to show new button color
-        toggleFavorite(!isFavorite);
+        isFavorite = !isFavorite;
+        toggleFavorite(isFavorite);
     }
 
 

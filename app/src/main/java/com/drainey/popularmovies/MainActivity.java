@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.iv_error_icon) ImageView mErrorIcon;
 
     private MovieAdapter mAdapter;
+    private String loadMoviesPath;
+    public static final String MOVIE_LOAD_PATH= "movieUrl";
     public static final String MOVIE_PARCEL = "movie_parcel";
 
     @Override
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        if(savedInstanceState != null){
+            loadMoviesPath = savedInstanceState.getString(MOVIE_LOAD_PATH);
+        }
 
         mErrorIcon.setImageResource(R.drawable.ic_error_icon);
         int color = ContextCompat.getColor(this, R.color.dark_red);
@@ -54,8 +60,12 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if(mAdapter == null){
             if(HttpUtils.isNetworkConnected(this)) {
-                URL url = MovieDataUtils.buildApiCall(MovieDataUtils.POPULAR_MOVIE_PATH, MovieDataUtils.API_KEY_VALUE);
+                String path = loadMoviesPath == null ? MovieDataUtils.POPULAR_MOVIE_PATH : loadMoviesPath;
+
+                URL url = MovieDataUtils.buildApiCall(path, MovieDataUtils.API_KEY_VALUE);
                 new MovieTask().execute(url);
+            } else {
+                toggleErrorMessage(true);
             }
         }
     }
@@ -114,10 +124,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()){
             case R.id.popular_movies:
-                apiPath = MovieDataUtils.POPULAR_MOVIE_PATH;
+                loadMoviesPath = MovieDataUtils.POPULAR_MOVIE_PATH;
                 break;
             case R.id.top_rated:
-                apiPath = MovieDataUtils.TOP_RATED_MOVIE_PATH;
+                loadMoviesPath = MovieDataUtils.TOP_RATED_MOVIE_PATH;
                 break;
             case R.id.favorite_movies:
                 Intent intent = new Intent(this, FavoriteMoviesActivity.class);
@@ -125,8 +135,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
-        if(apiPath != null){
-            URL url = MovieDataUtils.buildApiCall(apiPath, MovieDataUtils.API_KEY_VALUE);
+        if(loadMoviesPath != null){
+            URL url = MovieDataUtils.buildApiCall(loadMoviesPath, MovieDataUtils.API_KEY_VALUE);
             new MovieTask().execute(url);
             return true;
         }
@@ -144,4 +154,11 @@ public class MainActivity extends AppCompatActivity {
             mMovieGridView.setVisibility(View.VISIBLE);
         }
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(MOVIE_LOAD_PATH, loadMoviesPath);
+    }
+
 }
