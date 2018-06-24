@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
     private MovieAdapter mAdapter;
     private String loadMoviesPath;
-    public static final String MOVIE_LOAD_PATH= "movieUrl";
+    private int initialPosition;
+    public static final String FIRST_VISIBLE_INDEX = "first_index";
+    public static final String MOVIE_LOAD_PATH = "movieUrl";
     public static final String MOVIE_PARCEL = "movie_parcel";
 
     @Override
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
         if(savedInstanceState != null){
             loadMoviesPath = savedInstanceState.getString(MOVIE_LOAD_PATH);
+            initialPosition = savedInstanceState.getInt(FIRST_VISIBLE_INDEX);
+        } else {
+            loadMoviesPath = MovieDataUtils.POPULAR_MOVIE_PATH;
+            initialPosition = 0;
         }
 
         mErrorIcon.setImageResource(R.drawable.ic_error_icon);
@@ -60,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         if(mAdapter == null){
             if(HttpUtils.isNetworkConnected(this)) {
-                String path = loadMoviesPath == null ? MovieDataUtils.POPULAR_MOVIE_PATH : loadMoviesPath;
+                //String path = loadMoviesPath == null ? MovieDataUtils.POPULAR_MOVIE_PATH : loadMoviesPath;
 
-                URL url = MovieDataUtils.buildApiCall(path, MovieDataUtils.API_KEY_VALUE);
+                URL url = MovieDataUtils.buildApiCall(loadMoviesPath, MovieDataUtils.API_KEY_VALUE);
                 new MovieTask().execute(url);
             } else {
                 toggleErrorMessage(true);
@@ -91,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             final List<Movie> movieList = JsonUtils.getMovieList(s);
             mAdapter = new MovieAdapter(MainActivity.this, movieList);
             mMovieGridView.setAdapter(mAdapter);
+            mMovieGridView.setSelection(initialPosition);
             mMovieGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -158,7 +165,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+        int i = mMovieGridView.getFirstVisiblePosition();
+
         outState.putString(MOVIE_LOAD_PATH, loadMoviesPath);
+
+        outState.putInt(FIRST_VISIBLE_INDEX, i);
     }
 
 }
